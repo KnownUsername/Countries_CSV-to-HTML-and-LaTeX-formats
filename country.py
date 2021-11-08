@@ -3,7 +3,7 @@
 class Country:
 
     # Contains all fields' name (each column name)
-    fields = ['country_name', 'capital', 'currency', 'official_languages', 'head_of_government']
+    columns = ['country_name', 'capital', 'currency', 'official_languages', 'head_of_government']
 
     def __init__(self, country_name = None, capital = None, currency = None, official_languages = None, head_of_government = None):
         self.country_name = country_name

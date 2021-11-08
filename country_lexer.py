@@ -5,10 +5,10 @@ import ply.lex as plex
 class CountryLexer:
 
     """ ! Check if the variables are kept in class, or outside !"""
-    tokens = ("NEWLINE", "FIELD")
+    tokens = ("NEWLINE", "FIELD", "COMMA")
 
     # List of all countries
-    field_index = 0
+    column_index = 0
 
     current_country = Country()
     countries = []
@@ -32,7 +32,7 @@ class CountryLexer:
         r'[^,]'
         #print(t.value)
         # Set value of a class attribute ( Something close to this -> current_country.fields[field_index] = t.value )
-        setattr(self.current_country, Country.fields[self.field_index], t.value)
+        setattr(self.current_country, Country.columns[self.field_index], t.value)
 
         self.field_index += 1  # Index increment, to change column/field
         return t
