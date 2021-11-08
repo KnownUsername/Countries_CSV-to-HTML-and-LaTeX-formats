@@ -12,7 +12,6 @@ class CountryLexer:
     countries = []
 
 
-
     def t_NEWLINE(self, t):
         r'\n'
 
@@ -21,11 +20,11 @@ class CountryLexer:
 
         # Store read country
 
+
         return t
 
     def t_FIELD(self, t):
         r'[^,]'
-        #global field_index
 
         # Set value of a class attribute ( Something close to this -> current_country.fields[field_index] = t.value )
         setattr(self.current_country, self.fields[self.field_index], t.value)
