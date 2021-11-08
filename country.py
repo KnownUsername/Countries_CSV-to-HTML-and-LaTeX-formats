@@ -2,7 +2,7 @@
     Each field represents a column. """
 class Country:
 
-    def __init__(self, country_name, capital, currency, official_languages, head_of_government):
+    def __init__(self, country_name = None, capital = None, currency = None, official_languages = None, head_of_government = None):
         self.country_name = country_name
         self.capital = capital
         self.currency = currency
