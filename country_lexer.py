@@ -1,8 +1,11 @@
 from country import Country
+from my_utils import slurp
+import ply.lex as plex
 
 class CountryLexer:
 
     """ ! Check if the variables are kept in class, or outside !"""
+    tokens = ("NEWLINE", "FIELD")
 
     # List of all countries
     field_index = 0
@@ -10,7 +13,7 @@ class CountryLexer:
     current_country = Country()
     countries = []
 
-    tokens = ("NEWLINE", "FIELD")
+
     def t_NEWLINE(self, t):
         r'\n'
 
@@ -37,3 +40,17 @@ class CountryLexer:
     def t_error(self, t):
         print(f"Unexpected tokens: {t.value[0:10]}")
         exit(1)
+
+    def __init__(self):
+        self.lexer = None
+
+
+cl = CountryLexer()
+file = slurp('small_text.csv')
+#Ola = CalcLexer()
+#lexer = plex.lex()
+cl.lexer = plex.lex()
+cl.lexer.input(file)
+for token in iter(cl.lexer.token, None):
+    pass
+print("Finished processing")
