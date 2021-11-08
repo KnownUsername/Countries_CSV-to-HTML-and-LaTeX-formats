@@ -10,7 +10,7 @@ class CountryLexer:
     current_country = Country()
     countries = []
 
-
+    tokens = ("NEWLINE", "FIELD")
     def t_NEWLINE(self, t):
         r'\n'
 
@@ -33,3 +33,7 @@ class CountryLexer:
 
         self.field_index += 1  # Index increment, to change column/field
         return t
+
+    def t_error(self, t):
+        print(f"Unexpected tokens: {t.value[0:10]}")
+        exit(1)
