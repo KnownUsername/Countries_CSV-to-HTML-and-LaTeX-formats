@@ -7,7 +7,7 @@ import ply.lex as plex
 class CountryLexer:
 
     """ ! Check if the variables are kept in class, or outside !"""
-    tokens = ("NEWLINE", "NFIELD", "QMFIELD", "COMMA")
+    tokens = ("NEWLINE", "NFIELD", "QMFIELD", "COMMA", "EOF")
 
     # List of all countries
     column_index = 0
@@ -57,14 +57,15 @@ class CountryLexer:
 
         return t  # does it return?
 
-    #def t_EOF(self, t):
-     #   r'\z'
+    def t_EOF(self, t):
+        r"/'"
 
+        print("Olá!")
         # Store read country
-      #  self.countries.append(copy.deepcopy(self.current_country))
+        self.countries.append(copy.deepcopy(self.current_country))
 
         # Set all class's variables to None
-       # self.current_country.clean()
+        self.current_country.clean()
 
         #return t
 
@@ -81,28 +82,24 @@ class CountryLexer:
 
 cl = CountryLexer()
 file = slurp('small_text.csv')
-#print(file)
-#Ola = CalcLexer()
-#lexer = plex.lex()
+
 cl.initialize()
-#cl.lexer = plex.lex()
 cl.lexer.input(file)
+
 for token in iter(cl.lexer.token, None):
-    #print(token.value)
     pass
-print(cl.countries)
+
+###
+# Provisory solution for last line
+if file[-1] != '\n' and cl.current_country.country_namea:
+    # Store read country
+    cl.countries.append(copy.deepcopy(cl.current_country))
+
+    # Set all class's variables to None
+    cl.current_country.clean()
+###
+
 for country in cl.countries:
     country.present()
 
 print("Finished processing")
-#print(cl.current_country.country_name)
-#print(cl.current_country.country_name)
-#teste = CountryLexer()
-#setattr(teste.current_country, Country.columns[0], 'Portugal')
-#print(teste.current_country.country_name)
-#setattr(teste.current_country, Country.columns[0], 'Brazil')
-#print(teste.current_country.country_name)
-
-
-
-
