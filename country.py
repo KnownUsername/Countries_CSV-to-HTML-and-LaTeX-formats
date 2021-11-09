@@ -20,3 +20,6 @@ class Country:
         self.currency = None
         self.official_languages = None
         self.head_of_government = None
+
+    def present(self):
+        print(f'{self.country_name}, {self.capital}, {self.currency}, {self.official_languages}, {self.head_of_government}')
