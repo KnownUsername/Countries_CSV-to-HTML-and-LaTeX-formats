@@ -62,16 +62,18 @@ class CountryLexer:
     def initialize(self):
         self.lexer = plex.lex(module=self)
 
+    def process(self):
+        file = slurp(self.filename)
+        self.lexer = plex.lex(module=self)
+        self.lexer.input(file)
+
+        # Tokens' processing
+        for token in iter(cl.lexer.token, None):
+            pass
+
 
 cl = CountryLexer('small_text.csv')
-file = slurp(cl.filename)
-
-cl.initialize()
-cl.lexer.input(file)
-
-# Tokens' processing
-for token in iter(cl.lexer.token, None):
-    pass
+cl.process()
 
 # Show countries stored on list
 for country in cl.countries:
