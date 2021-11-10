@@ -55,19 +55,21 @@ class CountryLexer:
         print(f"Unexpected tokens: {t.value[0:10]}")
         exit(1)
 
-    def __init__(self):
+    def __init__(self, filename):
         self.lexer = None
+        self.filename = filename
 
     def initialize(self):
         self.lexer = plex.lex(module=self)
 
 
-cl = CountryLexer()
-file = slurp('small_text.csv')
+cl = CountryLexer('small_text.csv')
+file = slurp(cl.filename)
 
 cl.initialize()
 cl.lexer.input(file)
 
+# Tokens' processing
 for token in iter(cl.lexer.token, None):
     pass
 
