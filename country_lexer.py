@@ -21,22 +21,15 @@ class CountryLexer:
         # Set value of a class attribute ( Something close to this -> current_country.fields[field_index] = t.value )
         setattr(self.current_country, Country.columns[self.column_index], t.value)
 
-        return t
-
     def t_QMFIELD(self, t):
         r'"[^"]+"'
 
-        print(t.value)
         # Set value of a class attribute ( Something close to this -> current_country.fields[field_index] = t.value )
         setattr(self.current_country, Country.columns[self.column_index], t.value)
 
-        return t
-
     def t_COMMA(self, t):
         r','
-
         self.column_index += 1  # Index increment, to change column/field
-        return t
 
     def t_NEWLINE(self, t):
         r'\n'
@@ -49,8 +42,6 @@ class CountryLexer:
 
         # Set all class's variables to None
         self.current_country.clean()
-
-        return t  # does it return?
 
     def t_eof(self, t):
 
