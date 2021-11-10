@@ -16,15 +16,11 @@ class CountryLexer:
     countries = []
 
     def t_NFIELD(self, t):
-        r'[a-z A-Z-\'£Ã§]+'
+        r'[-\w \']+'
 
         # Set value of a class attribute ( Something close to this -> current_country.fields[field_index] = t.value )
         setattr(self.current_country, Country.columns[self.column_index], t.value)
 
-        #print(t.value)
-        #print(self.current_country.country_name)
-
-        #self.field_index += 1  # Index increment, to change column/field
         return t
 
     def t_QMFIELD(self, t):
@@ -38,14 +34,13 @@ class CountryLexer:
 
     def t_COMMA(self, t):
         r','
-        #print(self.column_index)
+
         self.column_index += 1  # Index increment, to change column/field
         return t
 
     def t_NEWLINE(self, t):
         r'\n'
-        #print(self.current_country.country_name)
-        #print(t.value)
+
         # Restart index value
         self.column_index = 0
 
@@ -57,17 +52,13 @@ class CountryLexer:
 
         return t  # does it return?
 
-    def t_EOF(self, t):
-        r"/'"
+    def t_eof(self, t):
 
-        print("Olá!")
         # Store read country
         self.countries.append(copy.deepcopy(self.current_country))
 
         # Set all class's variables to None
         self.current_country.clean()
-
-        #return t
 
     def t_error(self, t):
         print(f"Unexpected tokens: {t.value[0:10]}")
@@ -89,16 +80,7 @@ cl.lexer.input(file)
 for token in iter(cl.lexer.token, None):
     pass
 
-###
-# Provisory solution for last line
-if file[-1] != '\n' and cl.current_country.country_namea:
-    # Store read country
-    cl.countries.append(copy.deepcopy(cl.current_country))
-
-    # Set all class's variables to None
-    cl.current_country.clean()
-###
-
+# Show countries stored on list
 for country in cl.countries:
     country.present()
 
