@@ -13,4 +13,6 @@ class Country:
 
     def present(self):
         for column in self.columns:
-            getattr(self, column)
+            print(f'{column}: {getattr(self, column)}\t')
+
+
