@@ -14,7 +14,7 @@
 
 # Imports
 from country import Country
-from my_utils import slurp
+from my_utils import slurp, split_columns_values
 import ply.lex as plex
 import copy
 
@@ -23,7 +23,13 @@ class CountryLexer:
     """ Uses lexer, to find fields on a csv file. """
 
     # Tokens - defines different rules for regular expressions
-    tokens = ("NEWLINE", "NFIELD", "QMFIELD", "COMMA", "EOF")
+    tokens = ("NEWLINE", "NFIELD", "QMFIELD", "COMMA", "EOF", "DUMMY")
+
+    # States - Environment where tokens will be applied
+    states = (
+        ("header", "exclusive"),
+        ("body", "exclusive")
+    )
 
     # List of all countries
     column_index = 0
@@ -35,28 +41,56 @@ class CountryLexer:
     countries = []
 
     #   --- Token Rules ---   #
-
-    # Normal fields - No quotation marks
-    def t_NFIELD(self, t):
+    def t_DUMMY(self, t):
         r'[-\w \']+'
+        pass
 
-        # Set value of a class attribute ( Something close to this -> current_country.fields[field_index] = t.value )
-        setattr(self.current_country, Country.columns[self.column_index], t.value)
+    def t_header_NFIELD(self, t):
+        r'[-\w ()\']+'
+        self.current_country.columns.append(t.value)
+        print(f"Header: {t.value}")
+
 
     # Fields containing quotation marks
-    def t_QMFIELD(self, t):
+    def t_header_QMFIELD(self, t):
         r'"[^"]+"'
+        self.current_country.columns.append(t.value)
+
+    # Commas
+    def t_header_COMMA(self, t):
+        r','
+        pass
+
+    # New lines
+    def t_header_NEWLINE(self, t):
+        r'\n'
+
+        self.lexer.begin('body')
+
+    # Normal fields - No quotation marks
+    def t_body_NFIELD(self, t):
+        r'[-\w &()\'\.]+'
 
         # Set value of a class attribute ( Something close to this -> current_country.fields[field_index] = t.value )
         setattr(self.current_country, Country.columns[self.column_index], t.value)
 
+
+    # Fields containing quotation marks
+    def t_body_QMFIELD(self, t):
+        r'"[^"]+"'
+        modified_token = t.value
+        modified_token = modified_token[1:-1]
+        # Set value of a class attribute ( Something close to this -> current_country.fields[field_index] = t.value )
+        setattr(self.current_country, Country.columns[self.column_index], modified_token)
+
     # Commas
-    def t_COMMA(self, t):
+    def t_body_COMMA(self, t):
         r','
+
         self.column_index += 1  # Index increment, to change column/field
 
     # New lines
-    def t_NEWLINE(self, t):
+    def t_body_NEWLINE(self, t):
         r'\n'
 
         # Restart index value
@@ -69,7 +103,7 @@ class CountryLexer:
         self.current_country.clean()
 
     # End Of File
-    def t_eof(self, t):
+    def t_body_eof(self, t):
 
         # Store read country
         self.countries.append(copy.deepcopy(self.current_country))
@@ -78,7 +112,7 @@ class CountryLexer:
         self.current_country.clean()
 
     # Error manager
-    def t_error(self, t):
+    def t_ANY_error(self, t):
         print(f"Unexpected tokens: {t.value[0:10]}")
         exit(1)
 
@@ -104,20 +138,23 @@ class CountryLexer:
 
         # Reads a file content and saves it as string
         file = slurp(self.filename)
+
         # Initializes lexer variable
         self.lexer = plex.lex(module=self)
+
         # Introduces file's content on lexer
         self.lexer.input(file)
+        self.lexer.begin('header')
 
+        print("Test")
         # Tokens' processing
-        for token in iter(cl.lexer.token, None):
+        for token in iter(self.lexer.token, None):
             pass
-
 
 # Code to run
 
 # Instance of class
-cl = CountryLexer('small_text.csv')
+cl = CountryLexer('list1.csv')
 
 # Apply processes on file
 cl.process()
