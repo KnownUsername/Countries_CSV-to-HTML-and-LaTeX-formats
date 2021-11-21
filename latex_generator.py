@@ -4,10 +4,6 @@ class Latex_Generator:
     """ Generates HTML """
 
     def __init__(self, filename, countries):
-        if countries is None:
-            print("Countries are null")
-
-        else: print("Not None")
 
         self.countries = countries
         self.filename = filename
@@ -26,10 +22,23 @@ class Latex_Generator:
 
     def datafile_fill(self):
         f = open(self.filename, 'a')
+
         for country in self.countries:
-            country_obj = country
-            f.write('\\section*{\\Huge '+ getattr(country, country.columns[0]) + '}\n')
-            f.write('\\vspace{5mm} %5mm vertical space)\n\n')
-            #f.write(''country.)
+            field = getattr(country, country.columns[0])
+            field = field.replace('&', '\\&')
+
+            f.write('\\section*{\\Huge ' + field + '}\n')
+            f.write('\\vspace{5mm} %5mm vertical space)\n')
+            f.write('\\begin{itemize}\n')
+            for column in country.columns[1:]:
+                f.write('\t\\item \\textbf{' + column + ':} ' + getattr(country, column) + '\n')
+            f.write('\\end{itemize}\n\n')
         f.close()
+
+    def auto_fill_file(self):
+        self.initialize_doc()
+        self.datafile_fill()
+
+        f = open(self.filename, 'a')
+        f.write('\\end{document}')
 
