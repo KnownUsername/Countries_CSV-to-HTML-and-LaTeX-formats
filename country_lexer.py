@@ -48,7 +48,6 @@ class CountryLexer:
     def t_header_NFIELD(self, t):
         r'[-\w ()\']+'
         self.current_country.columns.append(t.value)
-        print(f"Header: {t.value}")
 
 
     # Fields containing quotation marks
@@ -146,21 +145,6 @@ class CountryLexer:
         self.lexer.input(file)
         self.lexer.begin('header')
 
-        print("Test")
         # Tokens' processing
         for token in iter(self.lexer.token, None):
             pass
-
-# Code to run
-
-# Instance of class
-cl = CountryLexer('list1.csv')
-
-# Apply processes on file
-cl.process()
-
-# Show countries stored on list
-for country in cl.countries:
-    country.present()
-
-print("Finished processing")
