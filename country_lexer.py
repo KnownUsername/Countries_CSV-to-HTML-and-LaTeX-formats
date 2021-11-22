@@ -42,6 +42,13 @@ class CountryLexer:
 
     #   --- Token Rules ---   #
     def t_DUMMY(self, t):
+        """ It's only defined, so that state INITIAL has a method associated to it.
+
+            If this method is removed, the program won't run, because INITIAL needs to be defined.
+            Being defined, means having any rule to work it, in this case, it's being used a method,
+            where the regular expression doesn't matter, as this state is never used.
+
+        """
         r'[-\w \']+'
         pass
 
