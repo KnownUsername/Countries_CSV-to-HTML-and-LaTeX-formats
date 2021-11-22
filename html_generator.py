@@ -1,3 +1,16 @@
+"""
+    Project: Countries_CSV-to-HTML-and-LaTeX-formats
+    Purpose: Academical
+    Description: Generates HTML a file, based on a list of objects
+
+    Author: João Rodrigues
+    Student No.: 16928
+
+    Course: LESI
+    Subject: Languages Processing
+    College: IPCA
+    Academic year: 2021/2022
+"""
 
 class HTML_Generator:
     """ Generates HTML """
