@@ -1,7 +1,7 @@
 from country import Country
 
 class Latex_Generator:
-    """ Generates HTML """
+    """ Generates LaTeX """
 
     def __init__(self, filename, countries):
 
@@ -21,6 +21,8 @@ class Latex_Generator:
         f.close()
 
     def datafile_fill(self):
+        """ Writes data on file """
+
         f = open(self.filename, 'a')
 
         for country in self.countries:
@@ -36,9 +38,10 @@ class Latex_Generator:
         f.close()
 
     def auto_fill_file(self):
+        """ Joins both write files and ends document tag """
+
         self.initialize_doc()
         self.datafile_fill()
 
         f = open(self.filename, 'a')
         f.write('\\end{document}')
-
