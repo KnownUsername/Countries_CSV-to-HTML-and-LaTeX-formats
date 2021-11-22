@@ -12,5 +12,7 @@ lg = Latex_Generator('countries.tex', countries = cl.countries)
 # Writes info into a file with given name on class builder
 lg.auto_fill_file()
 
+# Instance of class to build HTML file
 html = HTML_Generator('countries.html', countries = cl.countries)
+# Writes info into a file with given name on class builder
 html.auto_fill_file()
