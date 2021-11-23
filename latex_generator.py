@@ -17,10 +17,15 @@ from country import Country
 class Latex_Generator:
     """ Generates LaTeX """
 
-    def __init__(self, filename, countries):
+    def __init__(self, filename, countries, columns_enabled = None):
 
         self.countries = countries
         self.filename = filename
+        self.columns_enabled = columns_enabled
+
+        # In case no columns passed, it's assumed all columns
+        if not columns_enabled:
+            self.columns_enabled = self.countries[0].columns
 
     def initialize_doc(self):
         """ Writes on file default notation """
@@ -45,12 +50,15 @@ class Latex_Generator:
             field = field.replace('&', '\\&')
 
             f.write('\\section*{\\Huge ' + field + '}\n')
+            # Space between two lines
             f.write('\\vspace{5mm} %5mm vertical space)\n')
+            # Itemize values - Start
             f.write('\\begin{itemize}\n')
-            for column in country.columns[1:]:
+            for column in self.columns_enabled:
                 # Representation of # on LaTeX
                 field = getattr(country, column).replace('#','\\#')
                 f.write('\t\\item \\textbf{' + column.replace('#','\\#') + ':} ' + field + '\n')
+            # End itemize
             f.write('\\end{itemize}\n\n')
         f.close()
 
@@ -61,4 +69,5 @@ class Latex_Generator:
         self.datafile_fill()
 
         f = open(self.filename, 'a')
+        # Close document
         f.write('\\end{document}')
