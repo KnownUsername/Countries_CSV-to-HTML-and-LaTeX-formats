@@ -15,10 +15,15 @@
 class HTML_Generator:
     """ Generates HTML """
 
-    def __init__(self, filename, countries):
+    def __init__(self, filename, countries, columns_enabled = None):
 
         self.countries = countries
         self.filename = filename
+        self.columns_enabled = columns_enabled
+
+        # In case no columns passed, it's assumed all columns
+        if not columns_enabled:
+            self.columns_enabled = self.countries[0].columns
 
     def initialize_doc(self):
         """ Writes on file default notation """
@@ -26,7 +31,7 @@ class HTML_Generator:
         f = open(self.filename, 'w')
         f.write(
         '<!DOCTYPE html>\n'
-        '<html lang = "pt-pt">\n'
+        '<html lang = "en">\n'
             '\t<head>\n'
                 '\t\t<meta charset="utf-8">\n'
                 '\t\t<meta name = "description" content="HTML representation of a CSV file">\n'
@@ -45,7 +50,7 @@ class HTML_Generator:
         for country in self.countries:
             f.write('\t\t<h2>' + getattr(country, country.columns[0]) +'</h2>\n')
             f.write('\t\t<ul>\n')
-            for column in country.columns[1:]:
+            for column in self.columns_enabled:
                 f.write('\t\t\t<li><strong>'+ column +':</strong> ' + getattr(country, column) + '</li>\n')
             f.write('\t\t</ul>\n\n')
         f.close()
@@ -57,7 +62,9 @@ class HTML_Generator:
         self.datafile_fill()
 
         f = open(self.filename, 'a')
+        # Close body tag
         f.write('\t</body>\n')
+        # Close html tag
         f.write('</html>')
 
         f.close()
