@@ -41,13 +41,16 @@ class Latex_Generator:
 
         for country in self.countries:
             field = getattr(country, country.columns[0])
+            # Representation of & on LaTeX
             field = field.replace('&', '\\&')
 
             f.write('\\section*{\\Huge ' + field + '}\n')
             f.write('\\vspace{5mm} %5mm vertical space)\n')
             f.write('\\begin{itemize}\n')
             for column in country.columns[1:]:
-                f.write('\t\\item \\textbf{' + column + ':} ' + getattr(country, column) + '\n')
+                # Representation of # on LaTeX
+                field = getattr(country, column).replace('#','\\#')
+                f.write('\t\\item \\textbf{' + column.replace('#','\\#') + ':} ' + field + '\n')
             f.write('\\end{itemize}\n\n')
         f.close()
 
