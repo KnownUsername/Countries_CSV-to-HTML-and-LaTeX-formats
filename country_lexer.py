@@ -28,7 +28,8 @@ class CountryLexer:
     # States - Environment where tokens will be applied
     states = (
         ("header", "exclusive"),
-        ("body", "exclusive")
+        ("body", "exclusive"),
+        ("comment", "exclusive")
     )
 
     # List of all countries
@@ -52,8 +53,22 @@ class CountryLexer:
         r'[-\w \']+'
         pass
 
+    def t_header_HASHTAG(self, t):
+        r"\#[^,^\n]+"
+
+        if self.column_index == 0:
+            print(t.value + "\n")
+            self.comments.append(t.value)
+            self.previous_state = 'header'
+            self.lexer.begin('comment')
+
+        else:
+            print("Viva " + t.value)
+            self.current_country.columns.append(t.value)
+
+
     def t_header_NFIELD(self, t):
-        r'[-\w ()\']+'
+        r'[-\w ()\'#]+'
         self.current_country.columns.append(t.value)
 
 
@@ -65,20 +80,47 @@ class CountryLexer:
     # Commas
     def t_header_COMMA(self, t):
         r','
-        pass
+        self.column_index += 1  # Index increment, to change column/field
 
     # New lines
     def t_header_NEWLINE(self, t):
         r'\n'
-
+        self.column_index = 0
         self.lexer.begin('body')
 
+
     # Normal fields - No quotation marks
+
+    def t_body_HASHTAG(self, t):
+        r"\#[^,^\n]+"
+
+        if self.column_index == 0:
+            self.comments.append(t.value)
+            self.previous_state = 'body'
+            self.lexer.begin('comment')
+
+        else:
+            # Set value of a class attribute ( Something close to this -> current_country.fields[field_index] = t.value )
+            setattr(self.current_country, Country.columns[self.column_index], t.value)
+
     def t_body_NFIELD(self, t):
-        r'[-\w &()\'\.]+'
+        r'[-\w &()\'\.#]+'
 
         # Set value of a class attribute ( Something close to this -> current_country.fields[field_index] = t.value )
         setattr(self.current_country, Country.columns[self.column_index], t.value)
+
+
+    def t_comment_FILL(self, t):
+        r"[^\n]+"
+
+        self.comments[-1] = self.comments[-1] + t.value
+
+    def t_comment_NEWLINE(self, t):
+        r"\n"
+        print("Opo")
+        # returns to previous state
+        self.lexer.begin(self.previous_state)
+
 
 
     # Fields containing quotation marks
@@ -134,6 +176,8 @@ class CountryLexer:
 
         self.lexer = None
         self.filename = filename
+        self.previous_state = None
+        self.comments = []
 
     def process(self):
         """ Processes a csv file.
@@ -150,6 +194,7 @@ class CountryLexer:
 
         # Introduces file's content on lexer
         self.lexer.input(file)
+        # Start lexer on header state
         self.lexer.begin('header')
 
         # Tokens' processing
