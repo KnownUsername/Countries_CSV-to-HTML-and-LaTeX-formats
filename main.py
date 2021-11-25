@@ -1,3 +1,18 @@
+"""
+    Project: Countries_CSV-to-HTML-and-LaTeX-formats
+    Purpose: Academical
+    Description: Runs all program, by filtering values and
+                 generating an HTML and LaTeX file
+
+    Author: João Rodrigues
+    Student No.: 16928
+
+    Course: LESI
+    Subject: Languages Processing
+    College: IPCA
+    Academic year: 2021/2022
+"""
+
 from country_lexer import CountryLexer
 from latex_generator import Latex_Generator
 from html_generator import HTML_Generator
