@@ -218,12 +218,21 @@ class CountryLexer:
 
     # End Of File
     def t_body_eof(self, t):
+        """ Reaching EOF, it must be able to identify if last line is empty or a record.
+            The process is done by checking if current object has values.
 
-        # Store read country
-        self.countries.append(copy.deepcopy(self.current_country))
+            An object with values is saved and gets its values to None after it.
+            An object with no values is ignored.
+        """
 
-        # Set all class's variables to None
-        self.current_country.clean()
+        # If current object is not empty, than it must be included on list
+        if not self.current_country.is_empty():
+
+            # Store read country
+            self.countries.append(copy.deepcopy(self.current_country))
+
+            # Set all class's variables to None
+            self.current_country.clean()
 
 
     #    ==>    COMMENT    <==
