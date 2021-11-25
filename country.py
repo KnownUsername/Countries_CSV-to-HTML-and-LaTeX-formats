@@ -28,5 +28,3 @@ class Country:
         # If all values are empty, than it's considered empty
         # So true it's returned.
         return True
-
-
