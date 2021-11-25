@@ -56,9 +56,6 @@ class CountryLexer:
 
             # -  Data Structures - #
 
-        # Comments found
-        self.comments = []
-
         # All countries read
         self.countries = []
 
@@ -116,7 +113,6 @@ class CountryLexer:
         # Check if '#' is the 1st character on line
         # This occurs when column_index is 0, as it would be 1st field
         if self.column_index == 0:
-            self.comments.append(t.value)
 
             # Assign previous_state, so comment knows for where to return
             self.previous_state = 'header'
@@ -171,7 +167,6 @@ class CountryLexer:
         # Check if '#' is the 1st character on line
         # This occurs when column_index is 0, as it would be 1st field
         if self.column_index == 0:
-            self.comments.append(t.value)
 
             # Assign previous_state, so comment knows for where to return
             self.previous_state = 'body'
@@ -234,13 +229,8 @@ class CountryLexer:
     #    ==>    COMMENT    <==
 
     # Matches text on same line as found '#' character on a line comment.
-    # Matched text is concatenated to precede string
-    def t_comment_FILL(self, t):
-        r"[^\n]+"
-
-        # Concatenate rest of line to first string stored
-        # before change to comment state
-        self.comments[-1] = self.comments[-1] + t.value
+    # Content is ignored.
+    t_comment_ignore_comment = r"[^\n]+"
 
     # New lines
     def t_comment_NEWLINE(self, t):
