@@ -32,7 +32,6 @@ class Latex_Generator:
 
         f = open(self.filename, 'w')
         f.write('\\documentclass[a4paper,twoside]{book} \n'
-                '\\usepackage{tabularx}\n'
                 '\\font\\titlefont=cmr12 at 60pt \n'
                 '\\title{\\titlefont Countries Information}\n'
                 '\\begin{document}\n'
