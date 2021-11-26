@@ -61,14 +61,18 @@ class Latex_Generator:
             f.write('\\end{itemize}\n\n')
         f.close()
 
-    def auto_fill_file(self):
-        """ Joins both write files and ends document tag """
-
-        self.initialize_doc()
-        self.datafile_fill()
-
+    def end_document(self):
+        """ Writes commands to end the document """
         f = open(self.filename, 'a')
         # Close document
         f.write('\\end{document}')
 
         f.close()
+
+
+    def auto_fill_file(self):
+        """ Joins all processes of writing file """
+
+        self.initialize_doc()
+        self.datafile_fill()
+        self.end_document()

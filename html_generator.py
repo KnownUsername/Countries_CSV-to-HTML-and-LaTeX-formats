@@ -55,11 +55,8 @@ class HTML_Generator:
             f.write('\t\t</ul>\n\n')
         f.close()
 
-    def auto_fill_file(self):
-        """ Joins both write files and ends body and html tag """
-
-        self.initialize_doc()
-        self.datafile_fill()
+    def end_document(self):
+        """ Writes tags to end the document """
 
         f = open(self.filename, 'a')
         # Close body tag
@@ -68,3 +65,10 @@ class HTML_Generator:
         f.write('</html>')
 
         f.close()
+
+    def auto_fill_file(self):
+        """ Joins all processes of writing file """
+
+        self.initialize_doc()
+        self.datafile_fill()
+        self.end_document()
