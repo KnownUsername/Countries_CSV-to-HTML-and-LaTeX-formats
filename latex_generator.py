@@ -70,3 +70,5 @@ class Latex_Generator:
         f = open(self.filename, 'a')
         # Close document
         f.write('\\end{document}')
+
+        f.close()
