@@ -1,7 +1,23 @@
-Country Name,Capital,Currency,Official Languages,Head of Government
-Afghanistan,Kabul,Afghani,"Dari Persian, Pashto",President - Amrullah Saleh
-Albania,Tirane,Lek,Albanian,Prime Minister - Edi Rama
-Algeria,Algiers,Dinar,"Arabic, Tamazight, French",Prime Minister - Aymen Benabderrahmane
-Andorra,Andorra la Vella,Euro,Catalan,Prime Minister - Xavier Espot Zamora
-Angola,Luanda,New Kwanza,Portuguese,President - João Lourenço
-Antigua and Barbuda,Saint John's,East Caribbean dollar,English,Prime Minister - Gaston Browne
+#Testesito, verdade
+Country,Capital,Currency,#Primary La#nguage
+Afghanistan,Kabul,Afghani,"Dari Persian, Pashto"
+Albania,Tirane,Lek,Albanian
+Algeria,Algiers,Algerian Dinar,"Arabic, Tamazight, French"
+Andorra,Andorra la Vella,Euro,Catalan
+Angola,Luanda,Kwanza,Portuguese
+Antigua & Barbuda,Saint John's,East Caribbean Dollar,English
+Argentina,Buenos Aires,Argentine Peso,Spanish
+#Ola
+Armenia,Yerevan,Dram,Armenian
+Australia,Canberra,Australian Dollar,English
+Austria,Vienna,Euro,German
+Azerbaijan,Baku,Manat,Azerbaijani
+The Bahamas,Nassau,Bahamian Dollar,English
+Bahrain,Manama,Bahraini Dinar,Arabic
+Bangladesh,Dhaka,Taka,Bangla
+Barbados,Bridgetown,Barbadian Dollar,English
+#Belarus,Minsk,Belarusian Ruble,"Belarusian, Russian"
+Belgium,Brussels,Eu#ro,"Dutch, French, German"
+Belize,Belmopan,#Belize Dollar,English
+Benin,Porto-Novo,West African CFA Franc,French
+Bhutan,Thimphu,Ngultrum,Dzongkha
