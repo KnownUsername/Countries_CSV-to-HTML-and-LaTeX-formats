@@ -31,7 +31,7 @@ class Latex_Generator:
         """ Writes on file default notation """
 
         f = open(self.filename, 'w')
-        f.write('\\documentclass[a4paper,100pt,twoside]{book} \n'
+        f.write('\\documentclass[a4paper,twoside]{book} \n'
                 '\\usepackage{tabularx}\n'
                 '\\font\\titlefont=cmr12 at 60pt \n'
                 '\\title{\\titlefont Countries Information}\n'
@@ -56,7 +56,7 @@ class Latex_Generator:
             f.write('\\begin{itemize}\n')
             for column in self.columns_enabled:
                 # Representation of # on LaTeX
-                field = getattr(country, column).replace('#','\\#')
+                field = getattr(country, column).replace('#','\\#').replace('&', '\\&')
                 f.write('\t\\item \\textbf{' + column.replace('#','\\#') + ':} ' + field + '\n')
             # End itemize
             f.write('\\end{itemize}\n\n')
