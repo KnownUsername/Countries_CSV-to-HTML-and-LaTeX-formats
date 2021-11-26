@@ -25,7 +25,7 @@ class Latex_Generator:
 
         # In case no columns passed, it's assumed all columns
         if not columns_enabled:
-            self.columns_enabled = self.countries[0].columns
+            self.columns_enabled = self.countries[0].columns[1:]
 
     def initialize_doc(self):
         """ Writes on file default notation """
